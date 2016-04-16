@@ -15,8 +15,15 @@ public class Lexer {
     private String expPat = "(\\s*[a-z]+\\s*)|(\\s*[0-9]+\\s*)|(=|\\+|\\*|-)";
     private Pattern pattern = Pattern.compile(expPat);
 
+    /**
+     * 指示当前读取到了哪个位置
+     */
     private int index = 0;
 
+    /**
+     * 读取一个token, 位置指针后移
+     * @return
+     */
     public Token read() {
         if (index >= tokens.size()) {
             return Token.EOF;
@@ -25,6 +32,11 @@ public class Lexer {
         return tokens.get(index++);
     }
 
+    /**
+     * 预读取从当前起第next个token, 位置指针不后移
+     * @param next
+     * @return 如果到了结尾则返回TokenType.EOF
+     */
     public Token read(int next) {
         if (index + next >= tokens.size()) {
             return Token.EOF;
